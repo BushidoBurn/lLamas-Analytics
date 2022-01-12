@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog as fd
 
 
 
@@ -20,7 +21,8 @@ class MainWindow():
         self.window.mainloop()
 
     def read_csv(self):
-        pass
+        filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
+        print(filename)
 
     def showAbout():
         pass
