@@ -21,6 +21,17 @@ class MainWindow():
         self.fileMenu.add_command(label="Exit", command=self.window.quit)
         self.menuBar.add_cascade(label="File", menu=self.fileMenu)
         self.helpMenu = tk.Menu(self.menuBar, tearoff=0)
+
+        #Adding Edit button to the menu bar, which will have copy, cut and paste
+        self.Menuba=tk.Menu(self.menuBar, tearoff=0)
+        self.Menuba.add_command(label="Copy", command=self.copy)
+        self.Menuba.add_command(label="Cut", command=self.cut)
+        self.Menuba.add_command(label="Paste", command=self.paste)
+        self.Menuba.add_separator()
+        self.menuBar.add_cascade(label="Edit", menu=self.Menuba)
+
+
+
         self.helpMenu.add_command(label="About...", command=self.showAbout)
         self.menuBar.add_cascade(label="About", menu=self.helpMenu)
         self.window.config(menu=self.menuBar)
@@ -55,6 +66,19 @@ class MainWindow():
 
     def showAbout(self):
         label = tk.Label(self.plotFrame, text=getAbout()).pack()
+        
+    def copy(self, event=None):
+        self.clipboard_clear()
+        text = self.get("sel.first", "sel.last")
+        self.clipboard_append(text)
+
+    def cut(self, event):
+        self.copy()
+        self.delete("sel.first", "sel.last")
+        
+    def paste(self, event):
+        text = self.selection_get(selection='CLIPBOARD')
+        self.insert('insert', text)
 
 mw=MainWindow()
 
