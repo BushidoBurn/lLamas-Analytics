@@ -1,9 +1,11 @@
 import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter import ttk
+from tkinter import simpledialog
 
 from info import getAbout
 from stats import read_excel,read_csv
+import matplotlib.pyplot as plt
 
 
 class MainWindow():
@@ -34,8 +36,19 @@ class MainWindow():
 
         self.helpMenu.add_command(label="About...", command=self.showAbout)
         self.menuBar.add_cascade(label="About", menu=self.helpMenu)
+        self.calculateMenu = tk.Menu(self.menuBar, tearoff=0)
+        self.calculateMenu.add_command(label="Calculate Percentage", command=self.calculatePercentage)
+        self.menuBar.add_cascade(label="Calculate", menu=self.calculateMenu)
         self.window.config(menu=self.menuBar)
+        self.disable_Calculate()
         self.window.mainloop()
+
+
+    def enable_Calculate(self):
+        self.menuBar.entryconfig("Calculate", state="normal")
+
+    def disable_Calculate(self):
+        self.menuBar.entryconfig("Calculate", state="disabled")
 
     def read_csv(self):
         filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
@@ -61,6 +74,7 @@ class MainWindow():
 
         for index, row in self.data.iterrows():
             tree.insert("",0,text=index,values=list(row))
+        self.enable_Calculate()
 
        
 
@@ -79,6 +93,22 @@ class MainWindow():
     def paste(self, event):
         text = self.selection_get(selection='CLIPBOARD')
         self.insert('insert', text)
+
+    def calculatePercentage(self):
+        USER_INP1 = simpledialog.askstring(title="Calculate Percentage",
+                                  prompt="Enter Name Of Column To Calculate")
+        self.data['sums'] = self.data.groupby(USER_INP1)['Sales'].transform('sum')
+        self.data['proportion'] = self.data['Sales'] / self.data['sums']
+        labels = self.data[USER_INP1]
+        
+        #explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
+
+        fig1, ax1 = plt.subplots()
+        ax1.pie(self.data['proportion'], labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+        plt.show()
 
 mw=MainWindow()
 
