@@ -15,20 +15,14 @@ from info import getAbout
 from stats import Analyser
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-<<<<<<< HEAD
 
-=======
->>>>>>> b543a36548f818b906018cd179518c868678e407
 
 
 class MainWindow():
     def __init__(self):
         self.analyserObj=None
         self.OptionList = ["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category"] 
-<<<<<<< HEAD
-=======
 
->>>>>>> b543a36548f818b906018cd179518c868678e407
         self.window=tk.Tk()
         self.variable = tk.StringVar(self.window)
         self.variable.set(self.OptionList[0])
@@ -37,22 +31,16 @@ class MainWindow():
         self.window.geometry('800x800')
         self.plotFrame = tk.Frame(self.window,bg='white',width=800,height=400)
         self.plotFrame.pack()
-<<<<<<< HEAD
 
-=======
         self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
         self.opt.config(width=90, font=('Helvetica', 12))
         self.opt.pack(side="top")
->>>>>>> b543a36548f818b906018cd179518c868678e407
         self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
         self.plotFrame1.pack()
         self.menuBar=tk.Menu(self.window)
         self.fileMenu=tk.Menu(self.menuBar,tearoff=0)
         self.fileMenu.add_command(label="Open", command=self.readFile)
-<<<<<<< HEAD
-=======
         self.fileMenu.add_command(label="Save as", command=self.save)
->>>>>>> b543a36548f818b906018cd179518c868678e407
         self.fileMenu.add_separator()
         self.fileMenu.add_command(label="Exit", command=self.window.quit)
         self.menuBar.add_cascade(label="File", menu=self.fileMenu)
@@ -66,16 +54,13 @@ class MainWindow():
         self.Menuba.add_separator()
         self.menuBar.add_cascade(label="Edit", menu=self.Menuba)
 
-<<<<<<< HEAD
-        self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
-        self.opt.config(width=90, font=('Helvetica', 12))
-        self.opt.pack()
+        # self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
+        # self.opt.config(width=90, font=('Helvetica', 12))
+        # self.opt.pack()
         self.disable_Options()
 
 
 
-=======
->>>>>>> b543a36548f818b906018cd179518c868678e407
         self.helpMenu.add_command(label="About...", command=self.showAbout)
         self.menuBar.add_cascade(label="About", menu=self.helpMenu)
         self.calculateMenu = tk.Menu(self.menuBar, tearoff=0)
@@ -119,7 +104,6 @@ class MainWindow():
         self.showDF()
 
 
-<<<<<<< HEAD
     # def read_csv(self):
     #     filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
     #     df=read_csv(filename)
@@ -131,9 +115,7 @@ class MainWindow():
     #     df=read_excel(filename)
     #     self.data=df
     #     self.showDF()
-=======
 
->>>>>>> b543a36548f818b906018cd179518c868678e407
     
     def showDF(self):
         cols = list(self.data.columns)
@@ -190,15 +172,12 @@ class MainWindow():
         canvas.draw()
         canvas.get_tk_widget().pack()
         
-<<<<<<< HEAD
-=======
 
     def save(self):
         files = [('All files', '*.*'),
                     ('Python Files', '*.py'),
                     ('Text Document', '*.txt')]
         file = fd.asksaveasfile(filetypes=files, defaultextension=files)
->>>>>>> b543a36548f818b906018cd179518c868678e407
 
 mw=MainWindow()
 
