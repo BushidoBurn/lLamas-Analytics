@@ -37,8 +37,8 @@ class MainWindow():
         self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
         self.opt.config(width=90, font=('Helvetica', 12))
         self.opt.pack(side="top")
-        self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
-        self.plotFrame1.pack()
+        self.plotFrame1 = None#tk.Frame(self.window,bg='white',width=500,height=500)
+        #self.plotFrame1.pack()
         self.menuBar=tk.Menu(self.window)
         self.fileMenu=tk.Menu(self.menuBar,tearoff=0)
         self.fileMenu.add_command(label="Open", command=self.readFile)
@@ -176,13 +176,19 @@ class MainWindow():
 
 
     def generatePlotArea(self,fig):
+        self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
+        self.plotFrame1.pack()
         self.canvas = FigureCanvasTkAgg(fig, master=self.plotFrame1)  # A tk.DrawingArea.
         self.canvas.draw()
         self.canvas.get_tk_widget().pack()
 
     def _clear(self):
         if self.canvas:
-            self.canvas.get_tk_widget().destroy()
+            self.plotFrame1.destroy()
+            #self.canvas.get_tk_widget().destroy()
+            #for widgets in self.plotFrame1.winfo_children():
+            #    widgets.destroy()
+         
         
 
     def save(self):
