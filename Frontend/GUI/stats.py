@@ -54,6 +54,17 @@ class Analyser():
         y=self.df.groupby(['Category'])['Sales'].sum())
         return f
 
+    def getTotalQuantitySoldByCategory(self):
+        f, ax = plt.subplots(figsize=(11, 9))
+        sns.barplot(x=self.df.Category.unique(),
+                 y=self.df.groupby(['Category'])['Quantity'].sum())
+        return f
+
+    def getTotalProfitByCategory(self):
+        f, ax = plt.subplots(figsize=(11, 9))
+        sns.barplot(x=self.df.Category.unique(),
+                 y=self.df.groupby(['Category'])['Profit'].sum())
+        return f
     
     def getDF(self):
         return self.df

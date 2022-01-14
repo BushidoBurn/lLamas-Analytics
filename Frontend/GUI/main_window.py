@@ -23,7 +23,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 class MainWindow():
     def __init__(self):
         self.analyserObj=None
-        self.OptionList = ["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category"] 
+        self.OptionList = ["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"] 
         self.canvas=None
         self.window=tk.Tk()
         self.variable = tk.StringVar(self.window)
@@ -82,6 +82,10 @@ class MainWindow():
             self.showTotalProductBySubCategory()
         elif(selection==self.OptionList[2]):
             self.showTotalSalesByCategory()
+        elif(selection==self.OptionList[3]):
+            self.showTotalQuantitySoldByCategory()
+        elif(selection==self.OptionList[4]):
+            self.showTotalProfitByCategory()
         else:
             pass
     
@@ -173,6 +177,16 @@ class MainWindow():
         self._clear()
         fig=self.analyserObj.getTotalSalesByCategory()
         self.generatePlotArea(fig)
+
+    def showTotalQuantitySoldByCategory(self):
+        self._clear()
+        fig=self.analyserObj.getTotalQuantitySoldByCategory()
+        self.generatePlotArea(fig)       
+
+    def showTotalProfitByCategory(self):
+        self._clear()
+        fig=self.analyserObj.getTotalProfitByCategory()
+        self.generatePlotArea(fig)   
 
 
     def generatePlotArea(self,fig):
