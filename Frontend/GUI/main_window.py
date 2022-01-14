@@ -24,7 +24,7 @@ class MainWindow():
     def __init__(self):
         self.analyserObj=None
         self.OptionList = ["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category"] 
-
+        self.canvas=None
         self.window=tk.Tk()
         self.variable = tk.StringVar(self.window)
         self.variable.set(self.OptionList[0])
@@ -160,22 +160,29 @@ class MainWindow():
         pass
 
     def showTotalProductByCategory(self):
+        self._clear()
         fig=self.analyserObj.getTotalProductByCategory()
         self.generatePlotArea(fig)
 
     def showTotalProductBySubCategory(self):
+        self._clear()
         fig=self.analyserObj.getTotalProductBySubCategory()
         self.generatePlotArea(fig)
 
     def showTotalSalesByCategory(self):
+        self._clear()
         fig=self.analyserObj.getTotalSalesByCategory()
         self.generatePlotArea(fig)
 
 
     def generatePlotArea(self,fig):
-        canvas = FigureCanvasTkAgg(fig, master=self.plotFrame1)  # A tk.DrawingArea.
-        canvas.draw()
-        canvas.get_tk_widget().pack()
+        self.canvas = FigureCanvasTkAgg(fig, master=self.plotFrame1)  # A tk.DrawingArea.
+        self.canvas.draw()
+        self.canvas.get_tk_widget().pack()
+
+    def _clear(self):
+        if self.canvas:
+            self.canvas.get_tk_widget().destroy()
         
 
     def save(self):
