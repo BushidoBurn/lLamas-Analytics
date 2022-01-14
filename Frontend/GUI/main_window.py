@@ -9,6 +9,8 @@ from tkinter import ttk
 from tkinter import simpledialog
 from tkinter import font
 from turtle import bgcolor
+from tkinter import messagebox
+from urllib import response
 #from importlib_metadata import files
 
 from info import getAbout
@@ -132,8 +134,11 @@ class MainWindow():
         self.enable_Calculate()
         self.enable_Options()
         self.showTotalProductByCategory()
-
        
+    def quit(self):
+        self.window.response = messagebox.askyesno('Exit', 'Are you sure you want to exit')
+        if response:
+            self.window.destroy()
 
     def showAbout(self):
         label = tk.Label(self.plotFrame, text=getAbout()).pack()
