@@ -1,12 +1,19 @@
+from tkinter import*
+from argparse import FileType
+from cProfile import label
+from distutils import command
+#from msilib.schema import SelfReg
 import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter import ttk
 from tkinter import simpledialog
+from tkinter import font
+from turtle import bgcolor
+from importlib_metadata import files
 
 from info import getAbout
 from stats import read_excel,read_csv
 import matplotlib.pyplot as plt
-
 
 class MainWindow():
     def __init__(self):
@@ -19,6 +26,7 @@ class MainWindow():
         self.menuBar=tk.Menu(self.window)
         self.fileMenu=tk.Menu(self.menuBar,tearoff=0)
         self.fileMenu.add_command(label="Open", command=self.read_excel)
+        self.fileMenu.add_command(label="Save as", command=self.save)
         self.fileMenu.add_separator()
         self.fileMenu.add_command(label="Exit", command=self.window.quit)
         self.menuBar.add_cascade(label="File", menu=self.fileMenu)
@@ -31,8 +39,6 @@ class MainWindow():
         self.Menuba.add_command(label="Paste", command=self.paste)
         self.Menuba.add_separator()
         self.menuBar.add_cascade(label="Edit", menu=self.Menuba)
-
-
 
         self.helpMenu.add_command(label="About...", command=self.showAbout)
         self.menuBar.add_cascade(label="About", menu=self.helpMenu)
@@ -109,6 +115,11 @@ class MainWindow():
         ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
         plt.show()
+    def save(self):
+        files = [('All files', '*.*'),
+                    ('Python Files', '*.py'),
+                    ('Text Document', '*.txt')]
+        file = fd.asksaveasfile(filetypes=files, defaultextension=files)
 
 mw=MainWindow()
 
