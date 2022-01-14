@@ -9,7 +9,7 @@ from tkinter import ttk
 from tkinter import simpledialog
 from tkinter import font
 from turtle import bgcolor
-from importlib_metadata import files
+#from importlib_metadata import files
 
 from info import getAbout
 from stats import Analyser
@@ -21,6 +21,7 @@ class MainWindow():
     def __init__(self):
         self.analyserObj=None
         self.OptionList = ["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category"] 
+
         self.window=tk.Tk()
         self.variable = tk.StringVar(self.window)
         self.variable.set(self.OptionList[0])
@@ -29,17 +30,15 @@ class MainWindow():
         self.window.geometry('800x800')
         self.plotFrame = tk.Frame(self.window,bg='white',width=800,height=400)
         self.plotFrame.pack()
-
+        self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
+        self.opt.config(width=90, font=('Helvetica', 12))
+        self.opt.pack(side="top")
         self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
         self.plotFrame1.pack()
         self.menuBar=tk.Menu(self.window)
         self.fileMenu=tk.Menu(self.menuBar,tearoff=0)
-<<<<<<< HEAD
-        self.fileMenu.add_command(label="Open", command=self.read_excel)
-        self.fileMenu.add_command(label="Save as", command=self.save)
-=======
         self.fileMenu.add_command(label="Open", command=self.readFile)
->>>>>>> 8a67276 (Added plotting organized code by Class structure needs more work on plotting)
+        self.fileMenu.add_command(label="Save as", command=self.save)
         self.fileMenu.add_separator()
         self.fileMenu.add_command(label="Exit", command=self.window.quit)
         self.menuBar.add_cascade(label="File", menu=self.fileMenu)
@@ -53,16 +52,6 @@ class MainWindow():
         self.Menuba.add_separator()
         self.menuBar.add_cascade(label="Edit", menu=self.Menuba)
 
-<<<<<<< HEAD
-=======
-        self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
-        self.opt.config(width=90, font=('Helvetica', 12))
-        self.opt.pack()
-        self.disable_Options()
-
-
-
->>>>>>> 8a67276 (Added plotting organized code by Class structure needs more work on plotting)
         self.helpMenu.add_command(label="About...", command=self.showAbout)
         self.menuBar.add_cascade(label="About", menu=self.helpMenu)
         self.calculateMenu = tk.Menu(self.menuBar, tearoff=0)
@@ -106,17 +95,7 @@ class MainWindow():
         self.showDF()
 
 
-    # def read_csv(self):
-    #     filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
-    #     df=read_csv(filename)
-    #     self.data=df
-    #     self.showDF()
 
-    # def read_excel(self):
-    #     filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
-    #     df=read_excel(filename)
-    #     self.data=df
-    #     self.showDF()
     
     def showDF(self):
         cols = list(self.data.columns)
@@ -173,22 +152,12 @@ class MainWindow():
         canvas.draw()
         canvas.get_tk_widget().pack()
         
-<<<<<<< HEAD
-        #explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
 
-        fig1, ax1 = plt.subplots()
-        ax1.pie(self.data['proportion'], labels=labels, autopct='%1.1f%%',
-        shadow=True, startangle=90)
-        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-        plt.show()
     def save(self):
         files = [('All files', '*.*'),
                     ('Python Files', '*.py'),
                     ('Text Document', '*.txt')]
         file = fd.asksaveasfile(filetypes=files, defaultextension=files)
-=======
->>>>>>> 8a67276 (Added plotting organized code by Class structure needs more work on plotting)
 
 mw=MainWindow()
 
