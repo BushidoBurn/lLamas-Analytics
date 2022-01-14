@@ -137,7 +137,7 @@ class MainWindow():
             tree.insert("",0,text=index,values=list(row))
         self.enable_Calculate()
         self.enable_Options()
-        self.showTotalProductByCategory()
+        #self.showTotalProductByCategory()
        
     def quit(self):
         self.window.response = messagebox.askyesno('Exit', 'Are you sure you want to exit')
