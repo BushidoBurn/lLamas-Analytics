@@ -4,21 +4,30 @@ from tkinter import ttk
 from tkinter import simpledialog
 
 from info import getAbout
-from stats import read_excel,read_csv
-import matplotlib.pyplot as plt
+from stats import Analyser
+
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 
 
 class MainWindow():
     def __init__(self):
+        self.analyserObj=None
+        self.OptionList = ["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category"] 
         self.window=tk.Tk()
+        self.variable = tk.StringVar(self.window)
+        self.variable.set(self.OptionList[0])
         self.data=None
         self.window.title('lLamas-Analytics')
         self.window.geometry('800x800')
         self.plotFrame = tk.Frame(self.window,bg='white',width=800,height=400)
         self.plotFrame.pack()
+
+        self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
+        self.plotFrame1.pack()
         self.menuBar=tk.Menu(self.window)
         self.fileMenu=tk.Menu(self.menuBar,tearoff=0)
-        self.fileMenu.add_command(label="Open", command=self.read_excel)
+        self.fileMenu.add_command(label="Open", command=self.readFile)
         self.fileMenu.add_separator()
         self.fileMenu.add_command(label="Exit", command=self.window.quit)
         self.menuBar.add_cascade(label="File", menu=self.fileMenu)
@@ -32,6 +41,11 @@ class MainWindow():
         self.Menuba.add_separator()
         self.menuBar.add_cascade(label="Edit", menu=self.Menuba)
 
+        self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
+        self.opt.config(width=90, font=('Helvetica', 12))
+        self.opt.pack()
+        self.disable_Options()
+
 
 
         self.helpMenu.add_command(label="About...", command=self.showAbout)
@@ -41,8 +55,21 @@ class MainWindow():
         self.menuBar.add_cascade(label="Calculate", menu=self.calculateMenu)
         self.window.config(menu=self.menuBar)
         self.disable_Calculate()
+        self.variable.trace("w", self.dropdown_callback)
         self.window.mainloop()
 
+
+    def dropdown_callback(self,*args):
+        selection=self.variable.get()
+        if(selection==self.OptionList[0]):
+            self.showTotalProductByCategory()
+        elif(selection==self.OptionList[1]):
+            self.showTotalProductBySubCategory()
+        elif(selection==self.OptionList[2]):
+            self.showTotalSalesByCategory()
+        else:
+            pass
+    
 
     def enable_Calculate(self):
         self.menuBar.entryconfig("Calculate", state="normal")
@@ -50,17 +77,31 @@ class MainWindow():
     def disable_Calculate(self):
         self.menuBar.entryconfig("Calculate", state="disabled")
 
-    def read_csv(self):
+    def enable_Options(self):
+        self.opt.configure(state="normal")
+
+    def disable_Options(self):
+        self.opt.configure(state="disabled")
+
+
+    def readFile(self):
         filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
-        df=read_csv(filename)
-        self.data=df
+        self.analyserObj=Analyser(filename)
+        self.data=self.analyserObj.getDF()
         self.showDF()
 
-    def read_excel(self):
-        filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
-        df=read_excel(filename)
-        self.data=df
-        self.showDF()
+
+    # def read_csv(self):
+    #     filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
+    #     df=read_csv(filename)
+    #     self.data=df
+    #     self.showDF()
+
+    # def read_excel(self):
+    #     filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
+    #     df=read_excel(filename)
+    #     self.data=df
+    #     self.showDF()
     
     def showDF(self):
         cols = list(self.data.columns)
@@ -75,6 +116,8 @@ class MainWindow():
         for index, row in self.data.iterrows():
             tree.insert("",0,text=index,values=list(row))
         self.enable_Calculate()
+        self.enable_Options()
+        self.showTotalProductByCategory()
 
        
 
@@ -95,20 +138,26 @@ class MainWindow():
         self.insert('insert', text)
 
     def calculatePercentage(self):
-        USER_INP1 = simpledialog.askstring(title="Calculate Percentage",
-                                  prompt="Enter Name Of Column To Calculate")
-        self.data['sums'] = self.data.groupby(USER_INP1)['Sales'].transform('sum')
-        self.data['proportion'] = self.data['Sales'] / self.data['sums']
-        labels = self.data[USER_INP1]
+        pass
+
+    def showTotalProductByCategory(self):
+        fig=self.analyserObj.getTotalProductByCategory()
+        self.generatePlotArea(fig)
+
+    def showTotalProductBySubCategory(self):
+        fig=self.analyserObj.getTotalProductBySubCategory()
+        self.generatePlotArea(fig)
+
+    def showTotalSalesByCategory(self):
+        fig=self.analyserObj.getTotalSalesByCategory()
+        self.generatePlotArea(fig)
+
+
+    def generatePlotArea(self,fig):
+        canvas = FigureCanvasTkAgg(fig, master=self.plotFrame1)  # A tk.DrawingArea.
+        canvas.draw()
+        canvas.get_tk_widget().pack()
         
-        #explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
-
-        fig1, ax1 = plt.subplots()
-        ax1.pie(self.data['proportion'], labels=labels, autopct='%1.1f%%',
-        shadow=True, startangle=90)
-        ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-        plt.show()
 
 mw=MainWindow()
 
