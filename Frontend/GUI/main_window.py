@@ -24,20 +24,22 @@ class MainWindow():
     def __init__(self):
         self.allGraphOptions={"sales_performance_analyse":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"]}
         self.analyserObj=None
-        self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
+        #self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
+        self.OptionList = None
+        self.variable =None
         self.canvas=None
         self.window=tk.Tk()
-        self.variable = tk.StringVar(self.window)
-        self.variable.set(self.OptionList[0])
+        #self.variable = tk.StringVar(self.window)
+        #self.variable.set(self.OptionList[0])
         self.data=None
         self.window.title('lLamas-Analytics')
         self.window.geometry('800x800')
         self.plotFrame = tk.Frame(self.window,bg='white',width=800,height=400)
         self.plotFrame.pack()
-
-        self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
-        self.opt.config(width=90, font=('Helvetica', 12))
-        self.opt.pack(side="top")
+        self.opt = None
+        #self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
+        #self.opt.config(width=90, font=('Helvetica', 12))
+        #self.opt.pack(side="top")
         self.plotFrame1 = None#tk.Frame(self.window,bg='white',width=500,height=500)
         #self.plotFrame1.pack()
         self.menuBar=tk.Menu(self.window)
@@ -67,7 +69,7 @@ class MainWindow():
         # Adding Analyse MenuItem
         self.analyseMenu=tk.Menu(self.menuBar, tearoff=0)
         self.analyseMenu.add_command(label="Sales Trend Analyses", command=None)
-        self.analyseMenu.add_command(label="Sales Performance Analyses", command=None)
+        self.analyseMenu.add_command(label="Sales Performance Analyses", command=self.generateOptions)
         self.analyseMenu.add_command(label="Customer Analyses", command=None)
         self.menuBar.add_cascade(label="Analyse", menu=self.analyseMenu)
 
@@ -76,7 +78,7 @@ class MainWindow():
         # self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
         # self.opt.config(width=90, font=('Helvetica', 12))
         # self.opt.pack()
-        self.disable_Options()
+        ######self.disable_Options()
 
 
 
@@ -87,7 +89,7 @@ class MainWindow():
         self.menuBar.add_cascade(label="Calculate", menu=self.calculateMenu)
         self.window.config(menu=self.menuBar)
         self.disable_Calculate()
-        self.variable.trace("w", self.dropdown_callback)
+        #self.variable.trace("w", self.dropdown_callback)
         self.window.mainloop()
 
 
@@ -106,6 +108,15 @@ class MainWindow():
         else:
             pass
     
+    def generateOptions(self):
+        self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
+        self.variable = tk.StringVar(self.window)
+        self.variable.set(self.OptionList[0])
+        self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
+        self.opt.config(width=90, font=('Helvetica', 12))
+        self.opt.pack(side="top")
+        self.variable.trace("w", self.dropdown_callback)
+
 
     def enable_Calculate(self):
         self.menuBar.entryconfig("Calculate", state="normal")
@@ -157,7 +168,7 @@ class MainWindow():
         for index, row in self.data.iterrows():
             tree.insert("",0,text=index,values=list(row))
         self.enable_Calculate()
-        self.enable_Options()
+        #########self.enable_Options()
         #self.showTotalProductByCategory()
        
     def quit(self):
