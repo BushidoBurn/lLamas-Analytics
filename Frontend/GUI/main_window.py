@@ -109,8 +109,18 @@ class MainWindow():
                 self.showTotalProfitByCategory()
             else:
                 pass
-    
+        elif(self.selectedOptionCategory=="Sales Trend Analyses"):
+            selection=self.variable.get()
+            if(selection==self.OptionList[0]):
+                pass
+            else:
+                pass
+
     def generateOptions(self,selected):
+        if self.opt:
+            self.opt.destroy()
+            self._clear()
+
         self.selectedOptionCategory=selected
         self.OptionList =  self.allGraphOptions[self.selectedOptionCategory]
         self.variable = tk.StringVar(self.window)
