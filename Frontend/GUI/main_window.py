@@ -35,7 +35,7 @@ class MainWindow():
         self.data=None
         self.window.title('lLamas-Analytics')
         self.window.geometry('800x800')
-        self.plotFrame = tk.Frame(self.window,bg='white',width=800,height=400)
+        self.plotFrame = tk.Frame(self.window,bg='green',width=800,height=400)
         self.plotFrame.pack()
         self.opt = None
         #self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
