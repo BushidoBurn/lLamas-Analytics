@@ -48,6 +48,12 @@ class MainWindow():
         self.menuBar.add_cascade(label="File", menu=self.fileMenu)
         self.helpMenu = tk.Menu(self.menuBar, tearoff=0)
 
+        self.pb = ttk.Progressbar(self.plotFrame1,
+        orient='horizontal',
+        mode='indeterminate',
+        length=280)
+        
+
         #Adding Edit button to the menu bar, which will have copy, cut and paste
         self.Menuba=tk.Menu(self.menuBar, tearoff=0)
         self.Menuba.add_command(label="Copy", command=self.copy)
@@ -105,9 +111,13 @@ class MainWindow():
 
     def readFile(self):
         filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
+        self.pb.pack(pady=10)
+        self.bar()
         self.analyserObj=Analyser(filename)
+
         self.data=self.analyserObj.getDF()
         self.showDF()
+        self.pb.destroy()
 
 
     # def read_csv(self):
@@ -210,6 +220,54 @@ class MainWindow():
                     ('Python Files', '*.py'),
                     ('Text Document', '*.txt')]
         file = fd.asksaveasfile(filetypes=files, defaultextension=files)
+
+
+    def bar(self):
+        import time
+        self.pb['value'] = 20
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 40
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 50
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 60
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 80
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 100
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 80
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 60
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 50
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 40
+        self.window.update_idletasks()
+        time.sleep(0.5)
+    
+        self.pb['value'] = 20
+        self.window.update_idletasks()
+        time.sleep(0.5)
+        self.pb['value'] = 0
 
 mw=MainWindow()
 
