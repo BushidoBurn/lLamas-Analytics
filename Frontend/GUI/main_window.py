@@ -22,7 +22,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class MainWindow():
     def __init__(self):
-        self.allGraphOptions={"sales_performance_analyse":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"]}
+        self.selectedOptionCategory=None
+        self.allGraphOptions={"Sales Performance Analyses":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2"]}
         self.analyserObj=None
         #self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
         self.OptionList = None
@@ -68,9 +69,9 @@ class MainWindow():
 
         # Adding Analyse MenuItem
         self.analyseMenu=tk.Menu(self.menuBar, tearoff=0)
-        self.analyseMenu.add_command(label="Sales Trend Analyses", command=None)
-        self.analyseMenu.add_command(label="Sales Performance Analyses", command=self.generateOptions)
-        self.analyseMenu.add_command(label="Customer Analyses", command=None)
+        self.analyseMenu.add_command(label="Sales Trend Analyses", command= lambda:self.generateOptions("Sales Trend Analyses"))
+        self.analyseMenu.add_command(label="Sales Performance Analyses", command= lambda:self.generateOptions("Sales Performance Analyses"))
+        self.analyseMenu.add_command(label="Customer Analyses", command= lambda:self.generateOptions("Customer Analyses"))
         self.menuBar.add_cascade(label="Analyse", menu=self.analyseMenu)
 
 
@@ -94,22 +95,24 @@ class MainWindow():
 
 
     def dropdown_callback(self,*args):
-        selection=self.variable.get()
-        if(selection==self.OptionList[0]):
-            self.showTotalProductByCategory()
-        elif(selection==self.OptionList[1]):
-            self.showTotalProductBySubCategory()
-        elif(selection==self.OptionList[2]):
-            self.showTotalSalesByCategory()
-        elif(selection==self.OptionList[3]):
-            self.showTotalQuantitySoldByCategory()
-        elif(selection==self.OptionList[4]):
-            self.showTotalProfitByCategory()
-        else:
-            pass
+        if(self.selectedOptionCategory=="Sales Performance Analyses"):
+            selection=self.variable.get()
+            if(selection==self.OptionList[0]):
+                self.showTotalProductByCategory()
+            elif(selection==self.OptionList[1]):
+                self.showTotalProductBySubCategory()
+            elif(selection==self.OptionList[2]):
+                self.showTotalSalesByCategory()
+            elif(selection==self.OptionList[3]):
+                self.showTotalQuantitySoldByCategory()
+            elif(selection==self.OptionList[4]):
+                self.showTotalProfitByCategory()
+            else:
+                pass
     
-    def generateOptions(self):
-        self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
+    def generateOptions(self,selected):
+        self.selectedOptionCategory=selected
+        self.OptionList =  self.allGraphOptions[self.selectedOptionCategory]
         self.variable = tk.StringVar(self.window)
         self.variable.set(self.OptionList[0])
         self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
