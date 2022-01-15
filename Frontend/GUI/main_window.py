@@ -62,6 +62,16 @@ class MainWindow():
         self.Menuba.add_separator()
         self.menuBar.add_cascade(label="Edit", menu=self.Menuba)
 
+
+        # Adding Analyse MenuItem
+        self.analyseMenu=tk.Menu(self.menuBar, tearoff=0)
+        self.analyseMenu.add_command(label="Sales Trend Analyses", command=None)
+        self.analyseMenu.add_command(label="Sales Performance Analyses", command=None)
+        self.analyseMenu.add_command(label="Customer Analyses", command=None)
+        self.menuBar.add_cascade(label="Analyse", menu=self.analyseMenu)
+
+
+
         # self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
         # self.opt.config(width=90, font=('Helvetica', 12))
         # self.opt.pack()
