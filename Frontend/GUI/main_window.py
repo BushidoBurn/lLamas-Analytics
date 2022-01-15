@@ -23,7 +23,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 class MainWindow():
     def __init__(self):
         self.selectedOptionCategory=None
-        self.allGraphOptions={"Sales Performance Analyses":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2"]}
+        self.allGraphOptions={"Sales Performance Analyses":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
         self.analyserObj=None
         #self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
         self.OptionList = None
