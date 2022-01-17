@@ -70,7 +70,7 @@ class MainWindow():
         self.analyseMenu.add_command(label="Sales Trend Analyses", command= lambda:self.generateOptions("Sales Trend Analyses"))
         self.analyseMenu.add_command(label="Sales Performance Analyses", command= lambda:self.generateOptions("Sales Performance Analyses"))
         self.analyseMenu.add_command(label="Customer Analyses", command= lambda:self.generateOptions("Customer Analyses"))
-        self.analyseMenu.add_command(label="Summary", command= lambda:self.generateOptions("Customer"))
+        self.analyseMenu.add_command(label="Summary", command= lambda:self.generateOptions("Summary"))
         self.menuBar.add_cascade(label="Analyse", menu=self.analyseMenu)
 
 
