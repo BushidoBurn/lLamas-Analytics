@@ -23,7 +23,7 @@ class MainWindow():
     def __init__(self):
 
         self.selectedOptionCategory=None
-        self.allGraphOptions={"Sales Performance Analyses":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
+        self.allGraphOptions={"Sales Performance Analyzes":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category","Summary"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
         self.analyserObj=None
         #self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
         self.OptionList = None
@@ -78,20 +78,16 @@ class MainWindow():
 
         # Adding Analyse MenuItem
         self.analyseMenu=tk.Menu(self.menuBar, tearoff=0)
-        self.analyseMenu.add_command(label="Sales Trend Analyses", command= lambda:self.generateOptions("Sales Trend Analyses"))
-        self.analyseMenu.add_command(label="Sales Performance Analyses", command= lambda:self.generateOptions("Sales Performance Analyses"))
-        self.analyseMenu.add_command(label="Customer Analyses", command= lambda:self.generateOptions("Customer Analyses"))
+        self.analyseMenu.add_command(label="Sales Trend Analyzes", command= lambda:self.generateOptions("Sales Trend Analyzes"))
+        self.analyseMenu.add_command(label="Sales Performance Analyzes", command= lambda:self.generateOptions("Sales Performance Analyzes"))
+        self.analyseMenu.add_command(label="Customer Analyzes", command= lambda:self.generateOptions("Customer Analyzes"))
         self.analyseMenu.add_command(label="Summary", command= lambda:self.generateOptions("Summary"))
-        self.menuBar.add_cascade(label="Analyse", menu=self.analyseMenu)
-
-
+        self.menuBar.add_cascade(label="Analyze", menu=self.analyseMenu)
 
         # self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
         # self.opt.config(width=90, font=('Helvetica', 12))
         # self.opt.pack()
         ######self.disable_Options()
-
-
 
         self.helpMenu.add_command(label="About...", command=self.showAbout)
         self.menuBar.add_cascade(label="About", menu=self.helpMenu)
@@ -119,12 +115,12 @@ class MainWindow():
                 self.showTotalProfitByCategory()
             else:
                 pass
-        elif(self.selectedOptionCategory=="Sales Trend Analyses"):
+        elif(self.selectedOptionCategory=="Sales Trend Analyzes"):
             selection=self.variable.get()
             if(selection==self.OptionList[0]):
                 pass
             else:
-                pass
+                pass      
 
     def generateOptions(self,selected):
         if self.opt:
