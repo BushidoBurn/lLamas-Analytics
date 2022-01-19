@@ -15,11 +15,13 @@ from urllib import response
 
 from info import getAbout
 from stats import Analyser
+from PIL import Image, ImageTk
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class MainWindow():
     def __init__(self):
+
         self.selectedOptionCategory=None
         self.allGraphOptions={"Sales Performance Analyses":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
         self.analyserObj=None
@@ -36,6 +38,15 @@ class MainWindow():
         self.plotFrame = tk.Frame(self.window,bg='white',width=800,height=400)
         self.plotFrame.pack()
         self.opt = None
+
+
+        self.img=Image.open("logo.png")
+        self.img=self.img.resize((400, 400), Image.ANTIALIAS)
+        self.img_holder = ImageTk.PhotoImage(self.img)
+        self.img_label = tk.Label(self.window,image=self.img_holder)
+        self.img_label.image = self.img_holder
+        self.img_label.pack()
+
         #self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
         #self.opt.config(width=90, font=('Helvetica', 12))
         #self.opt.pack(side="top")
