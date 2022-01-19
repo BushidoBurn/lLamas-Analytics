@@ -159,6 +159,8 @@ class MainWindow():
         self.data=self.analyserObj.getDF()
         self.showDF()
         self.pb.destroy()
+        if self.img_label:
+            self.img_label.destroy()
 
 
     # def read_csv(self):
