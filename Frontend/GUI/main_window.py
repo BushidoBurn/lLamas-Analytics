@@ -1,3 +1,4 @@
+from time import time
 from tkinter import*
 from argparse import FileType
 from cProfile import label
@@ -27,7 +28,8 @@ import sys
 
 class MainWindow():
     def __init__(self):
-
+        self.summary_label=None
+        self.is_summary_written=None
         self.selectedOptionCategory=None
         self.allGraphOptions={"Sales Performance Analyzes":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
         self.analyserObj=None
@@ -46,7 +48,7 @@ class MainWindow():
         self.opt = None
 
 
-        self.img=Image.open("logo.png")
+        self.img=Image.open("LLAMAS.png")
         self.img=self.img.resize((400, 400), Image.ANTIALIAS)
         self.img_holder = ImageTk.PhotoImage(self.img)
         self.img_label = tk.Label(self.window,image=self.img_holder)
@@ -133,7 +135,18 @@ class MainWindow():
         if self.opt:
             self.opt.destroy()
             self._clear()
-
+        if self.is_summary_written:
+            self.is_summary_written=False
+            for widgets in self.plotFrame1.winfo_children():
+                print(widgets.winfo_class())
+                if widgets.winfo_class()=="Label":
+                    widgets.destroy()
+                    
+                    self.plotFrame1.destroy()
+                    #self.plotFrame1=None
+                    #self.plotFrame1 = tk.Frame(self.window,bg='gray',width=500,height=500)
+                    #self.plotFrame1.pack()
+        #time.sleep(1000)
         self.selectedOptionCategory=selected
         self.OptionList =  self.allGraphOptions[self.selectedOptionCategory]
         self.variable = tk.StringVar(self.window)
@@ -142,6 +155,9 @@ class MainWindow():
         self.opt.config(width=90, font=('Helvetica', 12))
         self.opt.pack(side="top")
         self.variable.trace("w", self.dropdown_callback)
+        if not self.plotFrame1:
+            self.plotFrame1 = tk.Frame(self.window,bg='gray',width=500,height=500)
+            self.plotFrame1.pack()
 
 
     def enable_Calculate(self):
@@ -282,7 +298,8 @@ class MainWindow():
         self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
         self.plotFrame1.pack()
         summary=self.analyserObj.getSummary()
-        label = tk.Label(self.plotFrame1, text=summary,anchor="e", justify=LEFT,font=("Arial Black",8)).pack()
+        self.is_summary_written=True
+        self.summary_label = tk.Label(self.plotFrame1, text=summary,anchor="e", justify=LEFT,font=("Arial Black",8)).pack()
 
     def save(self):
         files = [('All files', '*.*'),
