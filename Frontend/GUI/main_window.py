@@ -142,7 +142,7 @@ class MainWindow():
                 if widgets.winfo_class()=="Label":
                     widgets.destroy()
                     
-                    self.plotFrame1.destroy()
+                    #self.plotFrame1.destroy()
                     #self.plotFrame1=None
                     #self.plotFrame1 = tk.Frame(self.window,bg='gray',width=500,height=500)
                     #self.plotFrame1.pack()
@@ -155,9 +155,9 @@ class MainWindow():
         self.opt.config(width=90, font=('Helvetica', 12))
         self.opt.pack(side="top")
         self.variable.trace("w", self.dropdown_callback)
-        if not self.plotFrame1:
-            self.plotFrame1 = tk.Frame(self.window,bg='gray',width=500,height=500)
-            self.plotFrame1.pack()
+        #if not self.plotFrame1:
+        #    self.plotFrame1 = tk.Frame(self.window,bg='gray',width=500,height=500)
+        #    self.plotFrame1.pack()
 
 
     def enable_Calculate(self):
