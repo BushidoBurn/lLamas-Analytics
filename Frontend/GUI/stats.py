@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_theme(style="darkgrid")
 import numpy as np
-
+import warnings
+warnings.filterwarnings("ignore")
 
 
 
@@ -79,8 +80,12 @@ class Analyser():
             temp=self.df[self.df['Order_Date'].dt.year == y]
             all_df.append(temp)
         all_df.append(self.df)    
-
-        for i in range(len(all_df)):
+        result_text=""
+        l=len(all_df)
+        if(l==2):
+            l=1
+        
+        for i in range(l):
             year=all_df[i]['year'].unique()
             sales = round(sum(all_df[i]['Sales']),0)
             profit = round(sum(all_df[i]['Profit']),0)
@@ -106,5 +111,7 @@ class Analyser():
             print(f'➤{Poduct_max_profit.iloc[0, 0]} is the product with a max sales of €{round(Poduct_max_profit.iloc[0, 1],0)} & profit of €{round(Poduct_max_profit.iloc[0, 3],0)}.')
             print(f'➤Average shipping time for an order is {avg_stime} days.')
             
-            result_text="{0} \nThe total sales is €{1}  and total profit is €{2}.\nTotal of {3} products are sold over {4} cities.\n{5} is the most sold product.\n{6} is the product with a max sales of €{7} & profit of €{8}.\nAverage shipping time for an order is {9} days.".format(year,sales,profit,tP,tc,Poduct_max_sold.iloc[0, 0],Poduct_max_profit.iloc[0, 0],round(Poduct_max_profit.iloc[0, 1],0),round(Poduct_max_profit.iloc[0, 3],0),avg_stime)
-            return result_text
+            
+            result_text+="\n{0} \nThe total sales is €{1}  and total profit is €{2}.\nTotal of {3} products are sold over {4} cities.\n{5} is the most sold product.\n{6} is the product with a max sales of €{7} & profit of €{8}.\nAverage shipping time for an order is {9} days.".format(year,sales,profit,tP,tc,Poduct_max_sold.iloc[0, 0],Poduct_max_profit.iloc[0, 0],round(Poduct_max_profit.iloc[0, 1],0),round(Poduct_max_profit.iloc[0, 3],0),avg_stime)
+            
+        return result_text   

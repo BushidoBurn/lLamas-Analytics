@@ -272,7 +272,7 @@ class MainWindow():
         self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
         self.plotFrame1.pack()
         summary=self.analyserObj.getSummary()
-        label = tk.Label(self.plotFrame1, text=summary).pack()
+        label = tk.Label(self.plotFrame1, text=summary,anchor="e", justify=LEFT,font=("Arial Black",8)).pack()
 
     def save(self):
         files = [('All files', '*.*'),
