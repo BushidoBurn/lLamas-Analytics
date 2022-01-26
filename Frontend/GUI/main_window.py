@@ -19,11 +19,17 @@ from PIL import Image, ImageTk
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
+import sys
+# insert at 1, 0 is the script path (or '' in REPL)
+#sys.path.insert(1, '/path/to/application/app/folder')
+#sys.path.append('../')
+#import Backend.summary as summary
+
 class MainWindow():
     def __init__(self):
 
         self.selectedOptionCategory=None
-        self.allGraphOptions={"Sales Performance Analyzes":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category","Summary"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
+        self.allGraphOptions={"Sales Performance Analyzes":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
         self.analyserObj=None
         #self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
         self.OptionList = None
@@ -78,10 +84,11 @@ class MainWindow():
 
         # Adding Analyse MenuItem
         self.analyseMenu=tk.Menu(self.menuBar, tearoff=0)
-        self.analyseMenu.add_command(label="Sales Trend Analyzes", command= lambda:self.generateOptions("Sales Trend Analyzes"))
+        #self.analyseMenu.add_command(label="Sales Trend Analyzes", command= lambda:self.generateOptions("Sales Trend Analyzes"))
         self.analyseMenu.add_command(label="Sales Performance Analyzes", command= lambda:self.generateOptions("Sales Performance Analyzes"))
-        self.analyseMenu.add_command(label="Customer Analyzes", command= lambda:self.generateOptions("Customer Analyzes"))
-        self.analyseMenu.add_command(label="Summary", command= lambda:self.generateOptions("Summary"))
+        #self.analyseMenu.add_command(label="Customer Analyzes", command= lambda:self.generateOptions("Customer Analyzes"))
+        ######self.analyseMenu.add_command(label="Summary", command= lambda:self.generateOptions("Summary"))
+        self.analyseMenu.add_command(label="Summary", command=self.generateSummary)
         self.menuBar.add_cascade(label="Analyze", menu=self.analyseMenu)
 
         # self.opt = tk.OptionMenu(self.window, self.variable, *self.OptionList)
@@ -115,12 +122,12 @@ class MainWindow():
                 self.showTotalProfitByCategory()
             else:
                 pass
-        elif(self.selectedOptionCategory=="Sales Trend Analyzes"):
-            selection=self.variable.get()
-            if(selection==self.OptionList[0]):
-                pass
-            else:
-                pass      
+        # elif(self.selectedOptionCategory=="Sales Trend Analyzes"):
+        #     selection=self.variable.get()
+        #     if(selection==self.OptionList[0]):
+        #         pass
+        #     else:
+        #         pass      
 
     def generateOptions(self,selected):
         if self.opt:
@@ -249,6 +256,8 @@ class MainWindow():
         self.canvas.draw()
         self.canvas.get_tk_widget().pack()
 
+
+
     def _clear(self):
         if self.canvas:
             self.plotFrame1.destroy()
@@ -256,7 +265,14 @@ class MainWindow():
             #for widgets in self.plotFrame1.winfo_children():
             #    widgets.destroy()
          
-        
+    def generateSummary(self):
+        if self.opt:
+            self.opt.destroy()
+            self._clear()
+        self.plotFrame1 = tk.Frame(self.window,bg='white',width=500,height=500)
+        self.plotFrame1.pack()
+        summary=self.analyserObj.getSummary()
+        label = tk.Label(self.plotFrame1, text=summary).pack()
 
     def save(self):
         files = [('All files', '*.*'),
