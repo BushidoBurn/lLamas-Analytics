@@ -159,9 +159,19 @@ class MainWindow():
 
     def readFile(self):
         filename = fd.askopenfilename(filetypes=[("Data files", ".xlsx .xls .csv")])
-        self.pb.pack(pady=10)
-        self.bar()
+        #self.pb.pack(pady=10)
+        #self.bar()
+        if self.analyserObj:
+            self.plotFrame.destroy()
+            self._clear()
+            if self.opt:
+                self.opt.destroy()
+            self._clear()
+            self.plotFrame = tk.Frame(self.window,bg='white',width=500,height=500)
+            self.plotFrame.pack()
         self.analyserObj=Analyser(filename)
+       
+
 
         self.data=self.analyserObj.getDF()
         self.showDF()
