@@ -101,7 +101,7 @@ class MainWindow():
 
 
     def dropdown_callback(self,*args):
-        if(self.selectedOptionCategory=="Sales Performance Analyses"):
+        if(self.selectedOptionCategory=="Sales Performance Analyzes"):
             selection=self.variable.get()
             if(selection==self.OptionList[0]):
                 self.showTotalProductByCategory()
