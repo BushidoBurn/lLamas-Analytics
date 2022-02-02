@@ -31,7 +31,7 @@ class MainWindow():
         self.summary_label=None
         self.is_summary_written=None
         self.selectedOptionCategory=None
-        self.allGraphOptions={"Sales Performance Analyzes":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category","Total Profit by Category"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
+        self.allGraphOptions={"Sales Performance Analyzes":["Total Products by category","Total Products by Sub Category","Total Sales by Category","Total Quantity Sold by Category","Total Profit by Category","Total Quantity Sold by Category"],"Sales Trend Analyses":["Opt1","Opt2","Opt3"]}
         self.analyserObj=None
         #self.OptionList =  self.allGraphOptions["sales_performance_analyse"]
         self.OptionList = None
